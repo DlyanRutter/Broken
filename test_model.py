@@ -7,7 +7,7 @@ Date: Dec. 16th 2022
 import pytest, os, logging
 import pandas as pd
 
-from ml.model import train_model, inference, compute_model_metrics
+from starter.starter.ml.model import train_model, inference, compute_model_metrics
 
 
 """
@@ -65,9 +65,9 @@ def test_import_data(path):
         raise err
 
 
-def test_features(data, cat_features):
+def test_features(data, features):
     try:
-        assert set(data.columns).intersection(cat_features) == cat_features
+        assert sorted(set(data.columns).intersection(features)) == sorted(features)
     except AssertionError as err:
         logging.error(
         "Testing dataset: Features are missing in the data columns")
