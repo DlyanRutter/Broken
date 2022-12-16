@@ -17,13 +17,13 @@ use the return of data() as an argument
 @pytest.fixture(scope="module")
 def data():
     # code to load in the data.
-    datapath = "../data/census.csv"
+    datapath = "./starter/data/census.csv"
     return pd.read_csv(datapath)
 
 
 @pytest.fixture(scope="module")
 def path():
-    return "../data/census.csv"
+    return "./starter/data/census.csv"
 
 
 @pytest.fixture(scope="module")
