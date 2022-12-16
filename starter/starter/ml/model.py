@@ -28,21 +28,21 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     parameters = {
-                    'n_estimators': [10,20,30],
-                    'max_depth': [5,10],
-                    'min_samples_split':[20,50,100],
-                    'learning_rate':[1.0], #0.1,0.5,
-                    }
+        'n_estimators': [10, 20, 30],
+        'max_depth': [5, 10],
+        'min_samples_split': [20, 50, 100],
+        'learning_rate': [1.0],  # 0.1,0.5,
+    }
 
-    njobs = multiprocessing.cpu_count()-1
+    njobs = multiprocessing.cpu_count() - 1
     logging.info("Searching best hyperparameters on {} cores".format(njobs))
 
-    clf = GridSearchCV( GradientBoostingClassifier(random_state=0), 
-                        param_grid=parameters,
-                        cv=3,
-                        n_jobs=njobs,
-                        verbose=2,
-                        )
+    clf = GridSearchCV(GradientBoostingClassifier(random_state=0),
+                       param_grid=parameters,
+                       cv=3,
+                       n_jobs=njobs,
+                       verbose=2,
+                       )
 
     clf.fit(X_train, y_train)
     logging.info("********* Best parameters found ***********")
@@ -90,6 +90,7 @@ def inference(model, X):
     preds = model.predict(X)
 
     return preds
+
 
 def compute_confusion_matrix(y, preds, labels=None):
     """
