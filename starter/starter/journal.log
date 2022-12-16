@@ -1,0 +1,48 @@
+root - INFO - ********* searching for best hyper parameters ***********
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 1.0, 'max_depth': 5, 'min_samples_split': 50, 'n_estimators': 20}
+root - INFO - precision:0.735 
+recall:0.649 
+fbeta:0.689
+root - INFO - ********* searching for best hyper parameters ***********
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 1.0, 'max_depth': 5, 'min_samples_split': 100, 'n_estimators': 20}
+root - INFO - precision:0.760 
+recall:0.671 
+fbeta:0.713
+root - INFO - ********* searching for best hyper parameters ***********
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 1.0, 'max_depth': 5, 'min_samples_split': 20, 'n_estimators': 20}
+root - INFO - precision:0.751 
+recall:0.652 
+fbeta:0.698
+root - INFO - Searching best hyperparameters on 11 cores
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 1.0, 'max_depth': 5, 'min_samples_split': 20, 'n_estimators': 20}
+root - INFO - precision:0.746, recall:0.646, fbeta:0.692
+root - INFO - Confusion matrix:
+{}
+root - INFO - Searching best hyperparameters on 11 cores
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 0.5, 'max_depth': 5, 'min_samples_split': 50, 'n_estimators': 20}
+root - INFO - Classification target labels: ['<=50K', '>50K']
+root - INFO - precision:0.773, recall:0.649, fbeta:0.706
+root - INFO - Confusion matrix:
+[[4676  294]
+ [ 541 1002]]
+root - INFO - Searching best hyperparameters on 11 cores
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 0.1, 'max_depth': 10, 'min_samples_split': 100, 'n_estimators': 30}
+root - INFO - Classification target labels: ['<=50K', '>50K']
+root - INFO - precision:0.783, recall:0.624, fbeta:0.694
+root - INFO - Confusion matrix:
+[[4625  278]
+ [ 606 1004]]
+root - INFO - Searching best hyperparameters on 11 cores
+root - INFO - ********* Best parameters found ***********
+root - INFO - BEST PARAMS: {'learning_rate': 1.0, 'max_depth': 5, 'min_samples_split': 100, 'n_estimators': 20}
+root - INFO - Classification target labels: ['<=50K', '>50K']
+root - INFO - precision:0.760, recall:0.645, fbeta:0.698
+root - INFO - Confusion matrix:
+[[4606  323]
+ [ 562 1022]]
