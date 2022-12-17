@@ -83,6 +83,6 @@ logging.info(f"Confusion matrix:\n{cm}")
 
 # Compute performance on slices for categorical features
 for feature in cat_features:
-    performance_df = compute_slices(test, feature, encoder, y_test, preds)
+    performance_df = compute_slices(test, feature, y_test, preds)
     logging.info(f"Performance on slice {feature}")
     logging.info(performance_df)

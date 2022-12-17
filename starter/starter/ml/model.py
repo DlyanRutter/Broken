@@ -16,6 +16,7 @@ logging.basicConfig(filename='journal.log',
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
+    Use GridSearch for hyperparameter tuning and cross-validation
 
     Inputs
     ------
@@ -54,7 +55,7 @@ def train_model(X_train, y_train):
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using precision, recall, F1.
 
     Inputs
     ------
@@ -95,7 +96,7 @@ def inference(model, X):
 
 def compute_confusion_matrix(y, preds, labels=None):
     """
-    Compute confuson matrix using the predictions and ground thruth provided
+    Compute confusion matrix using the predictions and ground thruth provided
     Inputs
     ------
     y : np.array
@@ -110,68 +111,35 @@ def compute_confusion_matrix(y, preds, labels=None):
     return cm
 
 
-def compute_slices(X, y, preds, feature):
+
+def compute_slices(df, feature, y, preds):
     """
-    function which compute the performance on slices of the categorical features
+    Compute the performance on slices for a given categorical feature
+    a slice corresponds to one value option of the categorical feature analyzed
     ------
-    X : np.array
-        Data used for slices.
+    df: 
+        test dataframe pre-processed with features as column used for slices
+    feature:
+        feature on which to perform the slices
     y : np.array
         corresponding known labels, binarized.
     preds : np.array
         Predicted labels, binarized
-    feature:
-        feature on which to perform the slices
+
     Returns
     ------
-    Dataframe with 
+    Dataframe with
+        n_samples: integer - number of data samples in the slice
         precision : float
         recall : float
         fbeta : float
-    for each of the unique values taken by the feature
-    """    
-    slice_options = X.loc[:,feature].unique().tolist()
-    perf_df = pd.DataFrame(index=slice_options, 
-                            columns=['precision', 'recall', 'fbeta'])
-    for option in slice_options:
-        slice_mask = X[feature]==option
-        slice_y = y.iloc[slice_mask,:]
-        slice_preds = preds.iloc[slice_mask,:]
-        precision, recall, fbeta = compute_model_metrics(slice_y, slice_preds)
-        
-        perf_df.at[option, ['precision','recall','fbeta']] = precision, recall, fbeta
-
-    return perf_df
-
-
-
-def compute_slices(df, feature, encoder, y, preds):
-    """
-    function which compute the performance on slices of the categorical features
-    ------
-    X : np.array
-        Data used for slices.
-    y : np.array
-        corresponding known labels, binarized.
-    preds : np.array
-        Predicted labels, binarized
-    feature:
-        feature on which to perform the slices
-    Returns
-    ------
-    Dataframe with 
-        precision : float
-        recall : float
-        fbeta : float
-    for each of the unique values taken by the feature
+    row corresponding to each of the unique values taken by the feature (slice)
     """    
     slice_options = df[feature].unique().tolist()
     perf_df = pd.DataFrame(index=slice_options, 
                             columns=['n_samples','precision', 'recall', 'fbeta'])
     for option in slice_options:
         slice_mask = df[feature]==option
-        #slice = df[df[feature]==option]
-        #slice = encoder.transform(slice)
 
         slice_y = y[slice_mask]
         slice_preds = preds[slice_mask]
