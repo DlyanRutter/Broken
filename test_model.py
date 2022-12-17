@@ -4,10 +4,12 @@ author: Laurent veyssier
 Date: Dec. 16th 2022
 """
 
-import pytest, os, logging
+import pytest, os, logging, pickle
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
-from starter.starter.ml.model import train_model, inference, compute_model_metrics
+from starter.starter.ml.model import inference, compute_model_metrics, compute_confusion_matrix
+from starter.starter.ml.data import process_data
 
 
 """
@@ -42,11 +44,32 @@ def features():
     return cat_features
 
 
+@pytest.fixture(scope="module")
+def train_dataset(data, features):
+    """
+    Fixture - returns cleaned train dataset to be used for model testing
+    """
+    train, test = train_test_split( data, 
+                                test_size=0.20, 
+                                random_state=10, 
+                                stratify=data['salary']
+                                )
+    X_train, y_train, encoder, lb = process_data(
+                                            train,
+                                            categorical_features=features,
+                                            label="salary",
+                                            training=True
+                                        )
+    return X_train, y_train
+
 
 """
-Test method
+Test methods
 """
 def test_import_data(path):
+    """
+    Test presence and shape of dataset file
+    """
     try:
         df = pd.read_csv(path)
 
@@ -66,9 +89,89 @@ def test_import_data(path):
 
 
 def test_features(data, features):
+    """
+    Check that categorical features are in dataset
+    """
     try:
         assert sorted(set(data.columns).intersection(features)) == sorted(features)
     except AssertionError as err:
         logging.error(
         "Testing dataset: Features are missing in the data columns")
         raise err
+
+
+def test_trained_model():
+    """
+    Check saved model if any
+    """
+    savepath = "./starter/model/trained_model.pkl"
+    if os.path.isfile(savepath):
+        try:
+            _ = pickle.load(open(savepath, 'rb'))
+        except Exception as err:
+            logging.error(
+            "Testing saved model: Saved model does not appear to be valid")
+            raise err
+    else:
+        pass
+
+
+def test_inference(train_dataset):
+    """
+    Check inference function
+    """
+    X_train, y_train = train_dataset
+
+    savepath = "./starter/model/trained_model.pkl"
+    if os.path.isfile(savepath):
+        model = pickle.load(open(savepath, 'rb'))
+
+        try:
+            preds = inference(model, X_train)
+        except Exception as err:
+            logging.error(
+            "Inference cannot be performed on saved model and train data")
+            raise err
+    else:
+        pass
+
+
+def test_compute_model_metrics(train_dataset):
+    """
+    Check calculation of performance metrics function
+    """
+    X_train, y_train = train_dataset
+
+    savepath = "./starter/model/trained_model.pkl"
+    if os.path.isfile(savepath):
+        model = pickle.load(open(savepath, 'rb'))
+        preds = inference(model, X_train)
+
+        try:
+            precision, recall, fbeta = compute_model_metrics(y_train, preds)
+        except Exception as err:
+            logging.error(
+            "Performance metrics cannot be calculated on train data")
+            raise err
+    else:
+        pass
+
+def test_compute_confusion_matrix(train_dataset):
+    """
+    Check calculation of confusion matrix function
+    """
+    X_train, y_train = train_dataset
+
+    savepath = "./starter/model/trained_model.pkl"
+    if os.path.isfile(savepath):
+        model = pickle.load(open(savepath, 'rb'))
+        preds = inference(model, X_train)
+
+        try:
+            cm = compute_confusion_matrix(y_train, preds)
+        except Exception as err:
+            logging.error(
+            "Confusion matrix cannot be calculated on train data")
+            raise err
+    else:
+        pass

@@ -21,7 +21,11 @@ data = pd.read_csv(datapath)
 
 # Optional enhancement, use K-fold cross validation instead of a
 # train-test split using stratify due to class imbalance
-train, test = train_test_split(data, test_size=0.20, random_state=10, stratify=data['salary'])
+train, test = train_test_split( data, 
+                                test_size=0.20, 
+                                random_state=10, 
+                                stratify=data['salary']
+                                )
 
 cat_features = [
     "workclass",
@@ -57,7 +61,6 @@ savepath = '../model/trained_model.pkl'
 
 # if saved model exits, load the model from disk
 if os.path.isfile(savepath):
-    
     model = pickle.load(open(savepath, 'rb'))
 
 # Else Train and save a model.
