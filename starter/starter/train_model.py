@@ -1,12 +1,12 @@
 # Script to train machine learning model.
 
 from sklearn.model_selection import train_test_split
-import pickle
+import pickle, os
 
 # Add the necessary imports for the starter code.
 import pandas as pd
 from ml.data import process_data
-from ml.model import train_model, compute_model_metrics, inference
+from ml.model import train_model, compute_model_metrics, inference, compute_slices
 from ml.model import compute_confusion_matrix
 import logging
 
@@ -20,8 +20,8 @@ datapath = "../data/census.csv"
 data = pd.read_csv(datapath)
 
 # Optional enhancement, use K-fold cross validation instead of a
-# train-test split.
-train, test = train_test_split(data, test_size=0.20, random_state=10)
+# train-test split using stratify due to class imbalance
+train, test = train_test_split(data, test_size=0.20, random_state=10, stratify=data['salary'])
 
 cat_features = [
     "workclass",
@@ -52,8 +52,21 @@ X_test, y_test, encoder, lb = process_data(
     lb=lb
 )
 
-# Train and save a model.
-model = train_model(X_train, y_train)
+# check if trained model already exists
+savepath = '../model/trained_model.pkl'
+
+# if saved model exits, load the model from disk
+if os.path.isfile(savepath):
+    
+    model = pickle.load(open(savepath, 'rb'))
+
+# Else Train and save a model.
+else:
+    model = train_model(X_train, y_train)
+    # save model  to disk in ./model folder
+    pickle.dump(model, open(savepath, 'wb'))
+    logging.info(f"Model saved to disk: {savepath}")
+
 
 # evaluate trained model on test set
 preds = inference(model, X_test)
@@ -67,10 +80,9 @@ cm = compute_confusion_matrix(y_test, preds, labels=list(lb.classes_))
 
 logging.info(f"Confusion matrix:\n{cm}")
 
-# save model  to disk in ./model folder
-filepath = '../model/trained_model.pkl'
-pickle.dump(model, open(filepath, 'wb'))
-logging.info(f"Model saved to disk: {filepath}")
 
-# load the model from disk
-# model = pickle.load(open(filepath, 'rb'))
+# Compute performance on slices for categorical features
+for feature in cat_features:
+    performance_df = compute_slices(test, feature, encoder, y_test, preds)
+    logging.info(f"Performance on slice {feature}")
+    logging.info(performance_df)

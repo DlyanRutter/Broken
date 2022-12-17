@@ -1,6 +1,7 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score, confusion_matrix
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
+import pandas as pd
 import multiprocessing
 import logging
 
@@ -107,3 +108,78 @@ def compute_confusion_matrix(y, preds, labels=None):
     """
     cm = confusion_matrix(y, preds)
     return cm
+
+
+def compute_slices(X, y, preds, feature):
+    """
+    function which compute the performance on slices of the categorical features
+    ------
+    X : np.array
+        Data used for slices.
+    y : np.array
+        corresponding known labels, binarized.
+    preds : np.array
+        Predicted labels, binarized
+    feature:
+        feature on which to perform the slices
+    Returns
+    ------
+    Dataframe with 
+        precision : float
+        recall : float
+        fbeta : float
+    for each of the unique values taken by the feature
+    """    
+    slice_options = X.loc[:,feature].unique().tolist()
+    perf_df = pd.DataFrame(index=slice_options, 
+                            columns=['precision', 'recall', 'fbeta'])
+    for option in slice_options:
+        slice_mask = X[feature]==option
+        slice_y = y.iloc[slice_mask,:]
+        slice_preds = preds.iloc[slice_mask,:]
+        precision, recall, fbeta = compute_model_metrics(slice_y, slice_preds)
+        
+        perf_df.at[option, ['precision','recall','fbeta']] = precision, recall, fbeta
+
+    return perf_df
+
+
+
+def compute_slices(df, feature, encoder, y, preds):
+    """
+    function which compute the performance on slices of the categorical features
+    ------
+    X : np.array
+        Data used for slices.
+    y : np.array
+        corresponding known labels, binarized.
+    preds : np.array
+        Predicted labels, binarized
+    feature:
+        feature on which to perform the slices
+    Returns
+    ------
+    Dataframe with 
+        precision : float
+        recall : float
+        fbeta : float
+    for each of the unique values taken by the feature
+    """    
+    slice_options = df[feature].unique().tolist()
+    perf_df = pd.DataFrame(index=slice_options, 
+                            columns=['n_samples','precision', 'recall', 'fbeta'])
+    for option in slice_options:
+        slice_mask = df[feature]==option
+        #slice = df[df[feature]==option]
+        #slice = encoder.transform(slice)
+
+        slice_y = y[slice_mask]
+        slice_preds = preds[slice_mask]
+        precision, recall, fbeta = compute_model_metrics(slice_y, slice_preds)
+        
+        perf_df.at[option, 'n_samples'] = len(slice_y)
+        perf_df.at[option, 'precision'] = precision
+        perf_df.at[option, 'recall'] = recall
+        perf_df.at[option, 'fbeta'] = fbeta
+
+    return perf_df
