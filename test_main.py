@@ -9,7 +9,7 @@ from fastapi import HTTPException
 import json
 import logging
 
-from main import app
+from starter.main import app
 
 # Initialize logging
 logging.basicConfig(filename='test.log',
