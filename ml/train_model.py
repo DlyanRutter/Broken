@@ -7,9 +7,9 @@ Date: Dec. 16th 2022
 from sklearn.model_selection import train_test_split
 import pickle, os
 import pandas as pd
-from ml.data import process_data
-from ml.model import train_model, compute_model_metrics, inference, compute_slices
-from ml.model import compute_confusion_matrix
+from data import process_data
+from model import train_model, compute_model_metrics, inference, compute_slices
+from model import compute_confusion_matrix
 import logging
 
 def remove_if_exists(filename):

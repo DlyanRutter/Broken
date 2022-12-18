@@ -5,17 +5,11 @@ Date: Dec. 16th 2022
 """
 
 from fastapi.testclient import TestClient
-from fastapi import HTTPException
+#from fastapi import HTTPException
 import json
 import logging
 
-from starter.main import app
-
-# Initialize logging
-logging.basicConfig(filename='test.log',
-                    level=logging.INFO,
-                    filemode='w',
-                    format='%(name)s - %(levelname)s - %(message)s')
+from main import app
 
 client = TestClient(app)
 

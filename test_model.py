@@ -8,8 +8,8 @@ import pytest, os, logging, pickle
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from starter.starter.ml.model import inference, compute_model_metrics, compute_confusion_matrix
-from starter.starter.ml.data import process_data
+from ml.model import inference, compute_model_metrics, compute_confusion_matrix
+from ml.data import process_data
 
 
 """
@@ -19,13 +19,13 @@ use the return of data() as an argument
 @pytest.fixture(scope="module")
 def data():
     # code to load in the data.
-    datapath = "./starter/data/census.csv"
+    datapath = "./data/census.csv"
     return pd.read_csv(datapath)
 
 
 @pytest.fixture(scope="module")
 def path():
-    return "./starter/data/census.csv"
+    return "./data/census.csv"
 
 
 @pytest.fixture(scope="module")
@@ -104,7 +104,7 @@ def test_trained_model():
     """
     Check saved model if any
     """
-    savepath = "./starter/model/trained_model.pkl"
+    savepath = "./model/trained_model.pkl"
     if os.path.isfile(savepath):
         try:
             _ = pickle.load(open(savepath, 'rb'))
@@ -122,7 +122,7 @@ def test_inference(train_dataset):
     """
     X_train, y_train = train_dataset
 
-    savepath = "./starter/model/trained_model.pkl"
+    savepath = "./model/trained_model.pkl"
     if os.path.isfile(savepath):
         model = pickle.load(open(savepath, 'rb'))
 
@@ -142,7 +142,7 @@ def test_compute_model_metrics(train_dataset):
     """
     X_train, y_train = train_dataset
 
-    savepath = "./starter/model/trained_model.pkl"
+    savepath = "./model/trained_model.pkl"
     if os.path.isfile(savepath):
         model = pickle.load(open(savepath, 'rb'))
         preds = inference(model, X_train)
@@ -162,7 +162,7 @@ def test_compute_confusion_matrix(train_dataset):
     """
     X_train, y_train = train_dataset
 
-    savepath = "./starter/model/trained_model.pkl"
+    savepath = "./model/trained_model.pkl"
     if os.path.isfile(savepath):
         model = pickle.load(open(savepath, 'rb'))
         preds = inference(model, X_train)
