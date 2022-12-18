@@ -23,7 +23,7 @@ def test_root():
     assert r.json() == "Welcome to our model API"
 
 
-def test_inference_query():
+def test_inference():
     """
     Test model inference output
     """
@@ -57,7 +57,7 @@ def test_inference_query():
     assert r.json()["prediction"] == '>50K'
 
 
-def test_incomplete_inference_query():
+def test_wrong_inference_query():
     """
     Test incomplete sample does not generate prediction
     """
