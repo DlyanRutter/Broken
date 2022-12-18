@@ -1,7 +1,8 @@
 import requests
 import json
 
-url = "enter heroku web app url here"
+#url = "enter heroku web app url here"
+url = "https://git.heroku.com/udacity-fastapi-app.git"
 
 sample =  { 'age':50,
             'workclass':"Private", 
