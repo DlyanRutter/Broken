@@ -10,7 +10,7 @@ from typing import Union, Optional
 # BaseModel from Pydantic is used to define data objects
 from pydantic import BaseModel
 import pandas as pd
-import os, pickle
+import os, pickle, uvicorn
 from ml.data import process_data
 
 
@@ -106,3 +106,7 @@ async def ingest_data(inference: InputData):
 
 
     return data
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
