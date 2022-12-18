@@ -18,7 +18,7 @@ This model can be used to predict the salary level of an individual based off a 
 
 ## Training Data
 The Census Income Dataset was obtained from the UCI Machine Learning Repository (https://archive.ics.uci.edu/ml/datasets/census+income) as a csv file.
-The original data set has 32.561 rows and 15 columns composed of the target label "price", 9 categorical features and 5 numerical features.
+The original data set has 32.561 rows and 15 columns composed of the target label "price", 8 categorical features and 6 numerical features.
 Details on each of the features ae available at the UCI link above.
 Target label "salary" has two classes ('<=50K', '>50K') and shows class imbalance with a ratio of circa. 75% / 25%.
 A simple data cleansing was performed on the original dataset to remove leading and trailing whitespaces. See data_cleaning.ipynb notebook.

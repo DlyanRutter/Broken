@@ -8,7 +8,7 @@ import logging
 
 logging.basicConfig(filename='journal.log',
                     level=logging.INFO,
-                    filemode='a',
+                    filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
 
 
@@ -137,7 +137,7 @@ def compute_slices(df, feature, y, preds):
     """    
     slice_options = df[feature].unique().tolist()
     perf_df = pd.DataFrame(index=slice_options, 
-                            columns=['n_samples','precision', 'recall', 'fbeta'])
+                            columns=['feature','n_samples','precision', 'recall', 'fbeta'])
     for option in slice_options:
         slice_mask = df[feature]==option
 
@@ -145,9 +145,16 @@ def compute_slices(df, feature, y, preds):
         slice_preds = preds[slice_mask]
         precision, recall, fbeta = compute_model_metrics(slice_y, slice_preds)
         
+        perf_df.at[option, 'feature'] = feature
         perf_df.at[option, 'n_samples'] = len(slice_y)
         perf_df.at[option, 'precision'] = precision
         perf_df.at[option, 'recall'] = recall
         perf_df.at[option, 'fbeta'] = fbeta
+
+    # reorder columns in performance dataframe
+    perf_df.reset_index(names='feature value', inplace=True)
+    colList = list(perf_df.columns)
+    colList[0], colList[1] =  colList[1], colList[0]
+    perf_df = perf_df[colList]
 
     return perf_df
