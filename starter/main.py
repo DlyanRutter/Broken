@@ -11,7 +11,7 @@ from typing import Union, Optional
 from pydantic import BaseModel
 import pandas as pd
 import os, pickle
-from starter.ml.data import process_data
+from starter.starter.ml.data import process_data
 
 
 # Declare the data object with its components and their type.
