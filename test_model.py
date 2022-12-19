@@ -7,6 +7,7 @@ Date: Dec. 16th 2022
 import pytest, os, logging, pickle
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.exceptions import NotFittedError
 
 from ml.model import inference, compute_model_metrics, compute_confusion_matrix
 from ml.data import process_data
@@ -100,9 +101,9 @@ def test_features(data, features):
         raise err
 
 
-def test_trained_model():
+def test_is_model():
     """
-    Check saved model if any
+    Check saved model is present
     """
     savepath = "./model/trained_model.pkl"
     if os.path.isfile(savepath):
@@ -114,6 +115,23 @@ def test_trained_model():
             raise err
     else:
         pass
+
+
+def test_is_fitted_model(train_dataset):
+    """
+    Check saved model is fitted
+    """
+
+    X_train, y_train = train_dataset
+    savepath = "./model/trained_model.pkl"
+    model = pickle.load(open(savepath, 'rb'))
+
+    try:
+        model.predict(X_train)
+    except NotFittedError as err:
+        logging.error(
+        f"Model is not fit, error {err}")
+        raise err
 
 
 def test_inference(train_dataset):

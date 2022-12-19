@@ -13,6 +13,9 @@ import pandas as pd
 import os, pickle
 from ml.data import process_data
 
+ # path to saved artifacts
+savepath = './model'
+filename = ['trained_model.pkl', 'encoder.pkl', 'labelizer.pkl']
 
 # Declare the data object with its components and their type.
 class InputData(BaseModel):
@@ -57,6 +60,16 @@ app = FastAPI(  title="Inference API",
                 description="An API that takes a sample and runs an inference",
                 version="1.0.0")
 
+# load model artifacts on startup of the application to reduce latency
+@app.on_event("startup")
+async def startup_event(): 
+    global model, encoder, lb
+    # if saved model exits, load the model from disk
+    if os.path.isfile(os.path.join(savepath,filename[0])):
+        model = pickle.load(open(os.path.join(savepath,filename[0]), "rb"))
+        encoder = pickle.load(open(os.path.join(savepath,filename[1]), "rb"))
+        lb = pickle.load(open(os.path.join(savepath,filename[2]), "rb"))
+
 
 @app.get("/")
 async def greetings():
@@ -85,45 +98,45 @@ async def ingest_data(inference: InputData):
     # prepare the sample for inference as a dataframe
     sample = pd.DataFrame(data, index=[0])
 
-    # load saved model
-    savepath = './model'
-    filename = ['trained_model.pkl', 'encoder.pkl', 'labelizer.pkl']
+    # apply transformation to sample data
+    cat_features = [
+                    "workclass",
+                    "education",
+                    "marital-status",
+                    "occupation",
+                    "relationship",
+                    "race",
+                    "sex",
+                    "native-country",
+                    ]
 
     # if saved model exits, load the model from disk
     if os.path.isfile(os.path.join(savepath,filename[0])):
-        model = pickle.load(open(os.path.join(savepath,filename[0]), 'rb'))
-        encoder = pickle.load(open(os.path.join(savepath,filename[1]), 'rb'))
-        lb = pickle.load(open(os.path.join(savepath,filename[2]), 'rb'))
+        model = pickle.load(open(os.path.join(savepath,filename[0]), "rb"))
+        encoder = pickle.load(open(os.path.join(savepath,filename[1]), "rb"))
+        lb = pickle.load(open(os.path.join(savepath,filename[2]), "rb"))
+        
+    sample,_,_,_ = process_data(
+                                sample, 
+                                categorical_features=cat_features, 
+                                training=False, 
+                                encoder=encoder, 
+                                lb=lb
+                                )
 
-        # apply transformation to sample data
-        cat_features = [
-                        "workclass",
-                        "education",
-                        "marital-status",
-                        "occupation",
-                        "relationship",
-                        "race",
-                        "sex",
-                        "native-country",
-                        ]
+    # get model prediction which is a one-dim array like [1]                            
+    prediction = model.predict(sample)
 
-        sample,_,_,_ = process_data(
-                                    sample, 
-                                    categorical_features=cat_features, 
-                                    training=False, 
-                                    encoder=encoder, 
-                                    lb=lb
-                                    )
-
-        # get model prediction which is a one-dim array like [1]                            
-        prediction = model.predict(sample)
-
-        # convert prediction to label and add to data output
-        if prediction[0]>0.5:
-            prediction = '>50K'
-        else:
-            prediction = '<=50K', 
-        data['prediction'] = prediction
+    # convert prediction to label and add to data output
+    if prediction[0]>0.5:
+        prediction = '>50K'
+    else:
+        prediction = '<=50K', 
+    data['prediction'] = prediction
 
 
     return data
+
+
+if __name__ == '__main__':
+    pass
