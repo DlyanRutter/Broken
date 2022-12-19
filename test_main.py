@@ -107,3 +107,8 @@ def test_wrong_inference_query():
     logging.warning(f"The sample has {len(sample)} features. Must be 14 features")
         
     
+if '__name__' == '__main__':
+    test_root()
+    test_inference()
+    test_inference_class0()
+    test_wrong_inference_query()
