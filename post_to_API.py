@@ -2,7 +2,7 @@ import requests
 import json
 
 #url = "enter heroku web app url here"
-url = "https://git.heroku.com/udacity-fastapi-app.git"
+url = "https://udacity-fastapi-app.herokuapp.com/inference"
 
 sample =  { 'age':50,
             'workclass':"Private", 
