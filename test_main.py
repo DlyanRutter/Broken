@@ -46,7 +46,7 @@ def test_inference():
     data = json.dumps(sample)
 
     r = client.post("/inference", data=data )
-
+    logging.info(f'********* prediction = {r.json()} ********')
     # test response and output
     assert r.status_code == 200 or r.status_code == 307
     assert r.json()["age"] == 50
