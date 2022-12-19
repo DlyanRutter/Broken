@@ -20,13 +20,13 @@ The project follows these steps:
  The project is conducted under windows WSL2. Python 3.8 is used inside a virtual environment. Necessary packages are provided in the requirements.txt file also used for the Heroku deployment. A log file captured the training results and screenshots are provided to document the major achievements of the project.
 
 - inference FastAPI
- ![]()
+ ![](screenshots/example2.png)
  
  - inference output from endpoint
- ![]()
+ ![](screenshots/live_post.png)
  
  - CI/CD Github actions validation
- ![]()
+ ![](screenshots/github_actions_success.png)
  
 No external storage was necessary due to the dataset and model's light weights. External storage with Azure blob together with DVC for versioning could be implemented depending on the use case and the weight of these two major components.
                                      
