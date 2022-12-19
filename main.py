@@ -37,7 +37,7 @@ app = FastAPI(  title="Inference API",
                 description="An API that takes a sample and runs an inference",
                 version="1.0.0")
 
-server = app.server
+#server = app.server
 
 
 @app.get("/")
@@ -111,5 +111,5 @@ async def ingest_data(inference: InputData):
     return data
 
 
-if __name__ == '__main__':
-    app.run_server()
+'''if __name__ == '__main__':
+    app.run_server()'''
