@@ -14,13 +14,13 @@ The project follows these steps:
 * Once deployed and the Heroku app url triggered in the browser, the welcome message is displayed
 * Inference can be performed using the dedicated script "post_to_API.py". The script posts a sample item (14 features) to the app url/inference and the prediction is returned (together with the submitted sample item details). The inference is performed by the main.py module using the trained model and OH encoder saved in the ./model folder
 * See the screenshots as illustrations [here](https://github.com/LaurentVeyssier/nd0821-c3-Deploying-a-Machine-Learning-Model-with-FastAPI/tree/master/screenshots)
-
-
-
-
-
-
-
+ 
+ 
+  
+  
+ 
+ 
+ 
 ############### INITIAL PROJECT INSTRUCTIONS ####################
 
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
