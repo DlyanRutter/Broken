@@ -46,6 +46,8 @@ def test_inference():
     data = json.dumps(sample)
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/46.0.2490.80'}
     r = client.post("/inference", data=data, headers=headers )
+    print(r.text)
+    logging.info(f'********* prediction = {r.text} ********')
     logging.info(f'********* prediction = {r.json()} ********')
     # test response and output
     assert r.status_code == 200 or r.status_code == 307
