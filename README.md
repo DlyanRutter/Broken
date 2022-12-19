@@ -3,7 +3,7 @@ This is the project #3 of Udacity's ML DevOps Engineer nanodegree. Objective is 
 
 
 The project follows these steps:
-- Train a ML model on a classification task to predict salary level of individuals based on 14 various characteristics. You can refer for the detailed modelCard [here](https://github.com/LaurentVeyssier/nd0821-c3-Deploying-a-Machine-Learning-Model-with-FastAPI/blob/master/model_card_template.md) for details on the model and dataset used
+- Train a ML model on a classification task to predict salary group of individuals based on 14 various characteristics. The threshold salary used is $50,000. You can refer for the detailed modelCard [here](https://github.com/LaurentVeyssier/nd0821-c3-Deploying-a-Machine-Learning-Model-with-FastAPI/blob/master/model_card_template.md) for details on the model and dataset used
 - Expose the model for inference using a FastAPI app
 - Deploy the app using Heroku to provide inference endpoint
 - Implement Continuous Integration / Continuous Deployment workflow using Github actions, github repository and Heroku integration with Github. The app is only deployed if integrated, automated, tests are validated by Github actions upon modifications
