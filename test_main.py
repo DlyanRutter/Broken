@@ -46,9 +46,9 @@ def test_inference():
     data = json.dumps(sample)
 
     r = client.post("/inference/", data=data )
-    logging.info(f'********* prediction = {r.json()} ********')
+
     # test response and output
-    assert r.status_code == 200 or r.status_code == 307
+    assert r.status_code == 200
     assert r.json()["age"] == 50
     assert r.json()["fnlgt"] == 234721
 
@@ -79,10 +79,10 @@ def test_inference_class0():
 
     data = json.dumps(sample)
 
-    r = client.post("/inference", data=data )
+    r = client.post("/inference/", data=data )
 
     # test response and output
-    assert r.status_code == 200 or r.status_code == 307
+    assert r.status_code == 200
     assert r.json()["age"] == 30
     assert r.json()["fnlgt"] == 234721
 
@@ -101,9 +101,9 @@ def test_wrong_inference_query():
             }
 
     data = json.dumps(sample)
-    r = client.post("/inference", data=data )
+    r = client.post("/inference/", data=data )
 
-    assert r.status_code==307 or 'prediction' not in r.json().keys()
+    assert 'prediction' not in r.json().keys()
     logging.warning(f"The sample has {len(sample)} features. Must be 14 features")
         
     
