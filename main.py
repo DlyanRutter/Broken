@@ -10,7 +10,7 @@ from typing import Union, Optional
 # BaseModel from Pydantic is used to define data objects
 from pydantic import BaseModel
 import pandas as pd
-import os, pickle, uvicorn
+import os, pickle
 from ml.data import process_data
 
 
@@ -56,8 +56,6 @@ class InputData(BaseModel):
 app = FastAPI(  title="Inference API",
                 description="An API that takes a sample and runs an inference",
                 version="1.0.0")
-
-#server = app.server
 
 
 @app.get("/")
@@ -129,7 +127,3 @@ async def ingest_data(inference: InputData):
 
 
     return data
-
-
-'''if __name__ == '__main__':
-    app.run_server()'''

@@ -1,9 +1,17 @@
+"""
+Script to post to FastAPI instance for model inference
+author: Laurent veyssier
+Date: Dec. 18th 2022
+"""
+
 import requests
 import json
 
 #url = "enter heroku web app url here"
 url = "https://udacity-fastapi-app.herokuapp.com/inference"
 
+
+# explicit the sample to perform inference on
 sample =  { 'age':50,
             'workclass':"Private", 
             'fnlgt':234721,
@@ -21,7 +29,11 @@ sample =  { 'age':50,
             }
 
 data = json.dumps(sample)
+
+# post to API and collect response
 response = requests.post(url, data=data )
+
+# display output - response will show sample details + model prediction added
 print("response status code", response.status_code)
 print("response content:")
 print(response.json())
