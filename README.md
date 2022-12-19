@@ -17,7 +17,8 @@ The project follows these steps:
  
  
  # Environment and Set-up                                            
- The project is conducted under windows WSL2. Python 3.8 is used. Necessary packages are provided in the requierements.txt file also used for the deployment on Heroku. A log file captured the training results and screenshots are provided to document the major achievements of the project.
+ The project is conducted under windows WSL2. Python 3.8 is used inside a virtual environment. Necessary packages are provided in the requirements.txt file also used for the Heroku deployment. A log file captured the training results and screenshots are provided to document the major achievements of the project.
+No external storage was necessary due to the dataset and model's light weights. External storage with Azure blob together with DVC for versioning could be implemented depending on the use case and the weight of these two major components.
                                      
 The initial project instructions are provided below for information. Refer to the repo content for the actual implementation.
                                         
