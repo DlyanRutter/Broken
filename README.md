@@ -17,12 +17,12 @@ The project follows these steps:
  
  
  # Environment and Set-up                                            
- The project is conducted under windows WSL2. Python 3.8 is used. Necessary packages are provided in the requierements.txt file also used for the deployment on Heroku.
+ The project is conducted under windows WSL2. Python 3.8 is used. Necessary packages are provided in the requierements.txt file also used for the deployment on Heroku. A log file captured the training results and screenshots are provided to document the major achievements of the project.
                                      
- 
+The initial project instructions are provided below for information. Refer to the repo content for the actual implementation.
                                         
  
-############### INITIAL PROJECT INSTRUCTIONS ####################
+# INITIAL PROJECT INSTRUCTIONS
 
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
