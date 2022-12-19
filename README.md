@@ -1,20 +1,24 @@
 # Project Overview
-This is the project #3 of Udacity's ML DevOps Engineer nanodegree.
-Objective is to deploy a ML model with FastAPI on Heroku
+This is the project #3 of Udacity's ML DevOps Engineer nanodegree. Objective is to deploy a ML model with FastAPI on Heroku.
+
+
 The project follows these steps:
-- Train a ML model on a classification task to predict salary level of individuals based on 14 various characteristics
+- Train a ML model on a classification task to predict salary level of individuals based on 14 various characteristics. You can refer for the detailed modelCard [here]() for details on the model and dataset used
 - Expose the model for inference using a FastAPI app
 - Deploy the app using Heroku to provide inference endpoint
-- Implement Continuous Integration / Continuous Deployment workflow using Github actions, github repository and Heroku integration with Github. The app is only deployed if integrated tests are passed with Github actions upon each modifications
+- Implement Continuous Integration / Continuous Deployment workflow using Github actions, github repository and Heroku integration with Github. The app is only deployed if integrated, automated, tests are validated by Github actions upon modifications
 
 # Using the API client
 * main.py app is deployed to Heroku from github repo with CI/CD enabled (all implementation steps operated from Heroku GUI, ie Heroku app creation to deployment). Automatic deployments are performed only if Github actions continuous integration validation passes
 * Key files required by Heroku: Procfile + requirements.txt + python scripts + saved models. Heroku compressed slug is 119Mb
 * Once deployed and the Heroku app url triggered in the browser, the welcome message is displayed
 * Inference can be performed using the dedicated script "post_to_API.py". The script posts a sample item (14 features) to the app url/inference and the prediction is returned (together with the submitted sample item details). The inference is performed by the main.py module using the trained model and OH encoder saved in the ./model folder
-* See the screenshots as illustrations
+* See the screenshots as illustrations [here]()
 
-########## PROJECT INSTRUCTIONS #################
+
+
+
+############### INITIAL PROJECT INSTRUCTIONS ####################
 
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
