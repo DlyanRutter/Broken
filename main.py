@@ -128,14 +128,14 @@ async def ingest_data(inference: InputData):
     prediction = model.predict(sample)
 
     # convert prediction to label and add to data output
-    if prediction[0]>0.5:
-        prediction = '>50K'
-    else:
-        prediction = '<=50K', 
-    data['prediction'] = prediction
+    #if prediction[0]>0.5:
+    #    prediction = '>50K'
+    #else:
+    #    prediction = '<=50K', 
+    #data['prediction'] = prediction
 
 
-    return data
+    return prediction
 
 
 if __name__ == '__main__':
